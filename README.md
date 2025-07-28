@@ -93,7 +93,6 @@ Current version: 0.9
 
 ---
 
-**GitHub:** [shensquared/alfred-ImageMagick-actions](https://github.com/shensquared/alfred-ImageMagick-actions)
 
 ## Credits
 
