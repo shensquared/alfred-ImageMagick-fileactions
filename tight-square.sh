@@ -11,6 +11,31 @@ set -e  # Exit on any error
 query="$1"             # crop or crop_square
 file="$2"              # path to the selected file
 
+# === Helper: Copy image to clipboard ===
+copy_to_clipboard() {
+    local image_path="$1"
+    
+    if [[ -f "$image_path" ]]; then
+        # Use AppleScript to copy image to clipboard
+        osascript -e "
+        set the clipboard to (read (POSIX file \"$image_path\") as JPEG picture)
+        " 2>/dev/null || {
+            # Fallback: try to copy as file reference
+            osascript -e "
+            set the clipboard to POSIX file \"$image_path\"
+            " 2>/dev/null || {
+                echo "Warning: Could not copy image to clipboard" >&2
+                return 1
+            }
+        }
+        echo "Image copied to clipboard: $image_path"
+        return 0
+    else
+        echo "Error: Image file not found: $image_path" >&2
+        return 1
+    fi
+}
+
 # === Helper: Crop whitespace with ImageMagick ===
 # Takes input path, output path (optional), fuzz %
 crop_whitespace() {
@@ -67,6 +92,8 @@ if ! command -v magick &> /dev/null; then
 fi
 
 # === Main logic ===
+result_path=""
+
 if [[ "$query" == "crop_square" ]]; then
     # Step 1: Crop whitespace
     cropped_path=$(crop_whitespace "$file" "" 5)
@@ -95,14 +122,23 @@ if [[ "$query" == "crop_square" ]]; then
             -extent "${square_size}x${square_size}" \
             "$squared_path"
 
-        echo "$squared_path"
+        result_path="$squared_path"
     else
-        echo "$file"
+        result_path="$file"
     fi
 elif [[ "$query" == "crop" ]]; then
     # Just crop whitespace
-    crop_whitespace "$file" "" 5
+    result_path=$(crop_whitespace "$file" "" 5)
 else
     echo "Error: Invalid action '$query'. Use 'crop' or 'crop_square'" >&2
+    exit 1
+fi
+
+# Copy the resulting image to clipboard
+if [[ -n "$result_path" ]]; then
+    copy_to_clipboard "$result_path"
+    echo "$result_path"
+else
+    echo "Error: No result path generated" >&2
     exit 1
 fi 

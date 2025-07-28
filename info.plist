@@ -173,14 +173,14 @@ bash tight-square.sh "$1" "$filepath"</string>
 		<key>6C641557-7A00-47F8-9714-16FB10839D7D</key>
 		<dict>
 			<key>xpos</key>
-			<real>230</real>
+			<real>225</real>
 			<key>ypos</key>
 			<real>20</real>
 		</dict>
 		<key>BA2D7373-D4FC-4DD3-B86A-D96EF56F312C</key>
 		<dict>
 			<key>xpos</key>
-			<real>380</real>
+			<real>375</real>
 			<key>ypos</key>
 			<real>20</real>
 		</dict>
