@@ -1,143 +1,98 @@
 # Alfred ImageMagick File Actions
 
 <div align="center">
-  <img src="icon.png" alt="Alfred ImageMagick Workflow" width="200">
+  <img src="icon.png" alt="Alfred ImageMagick Workflow" width="300">
 </div>
 
-An Alfred workflow for quick image manipulation using ImageMagick. This workflow provides file actions to crop whitespace and create square images from your image files.
+An Alfred workflow for quick image manipulation using ImageMagick. Crop whitespace, create square images, and remove white backgrounds from your image files.
 
 ## Requirements
 
-- **[Alfred 4+](https://www.alfredapp.com/)** with Powerpack
-- **[ImageMagick](https://imagemagick.org/)** (must be installed and accessible via command line)
+- **[Alfred 4+](https://www.alfredapp.com/)** with Powerpack (required for List Filter functionality)
+- **[ImageMagick](https://imagemagick.org/)** - Install with `brew install imagemagick`
 
-### Installing ImageMagick
-
-#### macOS (using Homebrew)
-```bash
-brew install imagemagick
-```
-
-#### macOS (using MacPorts)
-```bash
-sudo port install ImageMagick
-```
-
-#### Manual Installation
-Download from [ImageMagick's official website](https://imagemagick.org/script/download.php#macosx)
+> **Note:** Without Powerpack, you can use the standalone scripts directly (see Development section).
 
 ## Installation
 
-1. Download the workflow file (`.alfredworkflow`)
+1. Download the `.alfredworkflow` file
 2. Double-click to install in Alfred
-3. Ensure ImageMagick is installed and accessible via `magick` command
+3. Ensure ImageMagick is accessible via `magick` command
 
 ## Features
 
-### Crop Whitespace
-- Removes surrounding whitespace from images
-- Uses 5% fuzz factor for intelligent edge detection
-- Preserves original aspect ratio
+### 🎯 Make TightLayout
+- **Crop Whitespace**: Removes surrounding whitespace (5% fuzz factor)
+- **Crop Whitespace + Square**: Crops whitespace then pads to perfect square
 
-### Crop Whitespace + Square
-- First crops whitespace from the image
-- Then pads the image to a perfect square
-- Uses white background for padding
-- Centers the image content
+### 🎨 Remove Background
+- Removes white backgrounds and converts to transparent PNG
+- Uses 10% fuzz factor for intelligent detection
+- Trims to tight bounds around the subject
+
+**All operations automatically copy results to clipboard.**
 
 ## Usage
 
 1. **Select an image file** in Finder
-2. **Right-click** and choose "Services" → "Make Tight"
-3. **Choose your action**:
-   - **Crop Whitespace**: Removes surrounding whitespace
-   - **Crop Whitespace + Square**: Removes whitespace and makes it square
+2. **Right-click** and choose from Services:
+   - **"Make TightLayout"** → Choose crop or crop+square
+   - **"Remove Background"** → Remove white background
 
-## Supported File Types
+## Supported Formats
 
-- PNG
-- JPEG/JPG
-- GIF
-- TIFF
-- HEIC
-- SVG
+PNG, JPEG, GIF, TIFF, HEIC, SVG
 
 ## Configuration
 
-The workflow includes several configurable options:
+- **Target Folder**: Where to save processed images (defaults to source location)
+- **Image Suffix**: Add suffix to processed filenames
+- **Open/Reveal**: Choose post-processing action (open, reveal, both, ask, or nothing)
 
-- **Target Folder**: Specify where to save processed images (defaults to source location)
-- **Image Suffix**: Add a suffix to processed image filenames
-- **Open/Reveal**: Choose what happens after processing (open, reveal, both, or nothing)
+## Output Files
 
-## How It Works
-
-The workflow uses ImageMagick's `magick` command with the following operations:
-
-- **Trim**: Removes surrounding whitespace using fuzz factor
-- **Extent**: Pads images to square dimensions
-- **Gravity**: Centers content when padding
+- **TightLayout**: Creates `_cropped` and `_squared` variants
+- **Background Removal**: Creates `_no_bg.png` with transparency
 
 ## Troubleshooting
 
 ### ImageMagick Not Found
-If you get an error about ImageMagick not being found:
-
-1. Verify ImageMagick is installed: `magick --version`
-2. Ensure it's in your PATH
-3. Restart Alfred after installing ImageMagick
+```bash
+brew install imagemagick
+magick --version  # Verify installation
+```
 
 ### Permission Issues
-If you encounter permission issues:
-
-1. Grant Alfred full disk access in System Preferences → Security & Privacy → Privacy → Full Disk Access
-2. Ensure the target folder is writable
+- Grant Alfred full disk access in System Preferences
+- Ensure target folder is writable
 
 ## Development
 
-This workflow is built using Alfred's workflow editor and includes:
-
-- File action trigger for image files
-- List filter for action selection
-- External bash script (`tight-square.sh`) for ImageMagick operations
-- Argument utility for file path handling
-
 ### Standalone Script Usage
 
-The `tight-square.sh` script can be used independently of Alfred:
-
 ```bash
-# Make the script executable (if not already)
-chmod +x tight-square.sh
+chmod +x tight-square.sh remove-white-bg.sh
 
-# Crop whitespace from an image
+# Crop whitespace
 ./tight-square.sh crop /path/to/image.png
 
-# Crop whitespace and make square
+# Crop and make square
 ./tight-square.sh crop_square /path/to/image.png
-```
 
-The script includes proper error handling and validation for:
-- Missing arguments
-- Invalid file paths
-- ImageMagick availability
-- Invalid action types
+# Remove background
+./remove-white-bg.sh /path/to/image.png
+```
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+MIT License - see [LICENSE](LICENSE) file.
 
 ## Version
 
-Current version: 0.8
+Current version: 0.9
 
 ---
 
-**Created by:** Shen Shen  
 **GitHub:** [shensquared/alfred-ImageMagick-actions](https://github.com/shensquared/alfred-ImageMagick-actions)
 
 ## Credits
