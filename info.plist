@@ -70,77 +70,7 @@
 				<key>script</key>
 				<string>#!/bin/bash
 
-# === Arguments from Alfred ===
-query="$1"             # crop or crop_square
-file="$filepath"       # path to the selected file
-
-# === Helper: Crop whitespace with ImageMagick ===
-# Takes input path, output path (optional), fuzz %
-crop_whitespace() {
-    local input="$1"
-    local output="$2"
-    local fuzz="${3:-5}"
-
-    if [[ -z "$input" || ! -f "$input" ]]; then
-        echo "Error: Invalid input file" &gt;&amp;2
-        return 1
-    fi
-
-    local input_dir
-    local input_filename
-    local input_name
-    local input_ext
-
-    input_dir=$(dirname "$input")
-    input_filename=$(basename "$input")
-    input_name="${input_filename%.*}"
-    input_ext="${input_filename##*.}"
-
-    if [[ -z "$output" ]]; then
-        output="${input_dir}/${input_name}_cropped.${input_ext}"
-    fi
-
-    magick "$input" -fuzz "${fuzz}%" -trim +repage "$output"
-    echo "$output"
-}
-
-# === Main logic ===
-if [[ "$query" == "crop_square" ]]; then
-    # Step 1: Crop whitespace
-    cropped_path=$(crop_whitespace "$file" "" 5)
-
-    # Step 2: Pad to square
-    if [[ -n "$cropped_path" &amp;&amp; -f "$cropped_path" ]]; then
-        dimensions=$(magick "$cropped_path" -format '%wx%h' info:)
-        width=$(echo "$dimensions" | cut -d'x' -f1)
-        height=$(echo "$dimensions" | cut -d'x' -f2)
-
-        if (( width &gt; height )); then
-            square_size=$width
-        else
-            square_size=$height
-        fi
-
-        input_dir=$(dirname "$cropped_path")
-        input_filename=$(basename "$cropped_path")
-        name_without_ext="${input_filename%.*}"
-        ext="${input_filename##*.}"
-        squared_path="${input_dir}/${name_without_ext}_squared.${ext}"
-
-        magick "$cropped_path" \
-            -background white \
-            -gravity center \
-            -extent "${square_size}x${square_size}" \
-            "$squared_path"
-
-        echo "$squared_path"
-    else
-        echo "$file"
-    fi
-else
-    # Just crop whitespace
-    crop_whitespace "$file" "" 5
-fi</string>
+bash tight-square.sh "$1" "$filepath"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>

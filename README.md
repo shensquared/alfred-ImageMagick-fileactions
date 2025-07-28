@@ -99,8 +99,29 @@ This workflow is built using Alfred's workflow editor and includes:
 
 - File action trigger for image files
 - List filter for action selection
-- Bash script for ImageMagick operations
+- External bash script (`tight-square.sh`) for ImageMagick operations
 - Argument utility for file path handling
+
+### Standalone Script Usage
+
+The `tight-square.sh` script can be used independently of Alfred:
+
+```bash
+# Make the script executable (if not already)
+chmod +x tight-square.sh
+
+# Crop whitespace from an image
+./tight-square.sh crop /path/to/image.png
+
+# Crop whitespace and make square
+./tight-square.sh crop_square /path/to/image.png
+```
+
+The script includes proper error handling and validation for:
+- Missing arguments
+- Invalid file paths
+- ImageMagick availability
+- Invalid action types
 
 ## License
 
