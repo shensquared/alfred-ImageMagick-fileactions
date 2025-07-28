@@ -464,6 +464,6 @@ bash remove-white-bg.sh "$filepath"</string>
 	<key>version</key>
 	<string>0.9</string>
 	<key>webaddress</key>
-	<string>https://github.com/shensquared/alfred-ImageMagick-actions</string>
+	<string>https://github.com/shensquared/alfred-ImageMagick-fileactions</string>
 </dict>
 </plist>
