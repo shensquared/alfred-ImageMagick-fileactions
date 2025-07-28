@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>shensquared.alfred.ImageMagick</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>1D0E4CCF-8C22-4574-AE9F-0D70920479D6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6C641557-7A00-47F8-9714-16FB10839D7D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>6C641557-7A00-47F8-9714-16FB10839D7D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>BA2D7373-D4FC-4DD3-B86A-D96EF56F312C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>BA2D7373-D4FC-4DD3-B86A-D96EF56F312C</key>
+		<array/>
+		<key>EA241CBE-B9E4-4050-BAE7-9EDCEB5A5D56</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1D0E4CCF-8C22-4574-AE9F-0D70920479D6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Shen Shen</string>
+	<key>description</key>
+	<string>Image manipulations -- resize, make tight, conversion</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>ImageMagick</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>#!/bin/bash
+
+# === Arguments from Alfred ===
+query="$1"             # crop or crop_square
+file="$filepath"       # path to the selected file
+
+# === Helper: Crop whitespace with ImageMagick ===
+# Takes input path, output path (optional), fuzz %
+crop_whitespace() {
+    local input="$1"
+    local output="$2"
+    local fuzz="${3:-5}"
+
+    if [[ -z "$input" || ! -f "$input" ]]; then
+        echo "Error: Invalid input file" &gt;&amp;2
+        return 1
+    fi
+
+    local input_dir
+    local input_filename
+    local input_name
+    local input_ext
+
+    input_dir=$(dirname "$input")
+    input_filename=$(basename "$input")
+    input_name="${input_filename%.*}"
+    input_ext="${input_filename##*.}"
+
+    if [[ -z "$output" ]]; then
+        output="${input_dir}/${input_name}_cropped.${input_ext}"
+    fi
+
+    magick "$input" -fuzz "${fuzz}%" -trim +repage "$output"
+    echo "$output"
+}
+
+# === Main logic ===
+if [[ "$query" == "crop_square" ]]; then
+    # Step 1: Crop whitespace
+    cropped_path=$(crop_whitespace "$file" "" 5)
+
+    # Step 2: Pad to square
+    if [[ -n "$cropped_path" &amp;&amp; -f "$cropped_path" ]]; then
+        dimensions=$(magick "$cropped_path" -format '%wx%h' info:)
+        width=$(echo "$dimensions" | cut -d'x' -f1)
+        height=$(echo "$dimensions" | cut -d'x' -f2)
+
+        if (( width &gt; height )); then
+            square_size=$width
+        else
+            square_size=$height
+        fi
+
+        input_dir=$(dirname "$cropped_path")
+        input_filename=$(basename "$cropped_path")
+        name_without_ext="${input_filename%.*}"
+        ext="${input_filename##*.}"
+        squared_path="${input_dir}/${name_without_ext}_squared.${ext}"
+
+        magick "$cropped_path" \
+            -background white \
+            -gravity center \
+            -extent "${square_size}x${square_size}" \
+            "$squared_path"
+
+        echo "$squared_path"
+    else
+        echo "$file"
+    fi
+else
+    # Just crop whitespace
+    crop_whitespace "$file" "" 5
+fi</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>BA2D7373-D4FC-4DD3-B86A-D96EF56F312C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>fixedorder</key>
+				<false/>
+				<key>items</key>
+				<string>[{"title":"Crop Whitespace","arg":"crop","subtitle":"Remove surrounding whitespace"},{"title":"Crop Whitespace + Square","arg":"crop_square","subtitle":"Remove whitespace and pad to square"}]</string>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Make Tight</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.listfilter</string>
+			<key>uid</key>
+			<string>6C641557-7A00-47F8-9714-16FB10839D7D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsmulti</key>
+				<integer>1</integer>
+				<key>filetypes</key>
+				<array>
+					<string>com.compuserve.gif</string>
+					<string>public.heic</string>
+					<string>public.jpeg</string>
+					<string>public.png</string>
+					<string>public.svg-image</string>
+					<string>public.tiff</string>
+				</array>
+				<key>name</key>
+				<string>Make Tight</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.action</string>
+			<key>uid</key>
+			<string>EA241CBE-B9E4-4050-BAE7-9EDCEB5A5D56</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>filepath</key>
+					<string>{query}</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>1D0E4CCF-8C22-4574-AE9F-0D70920479D6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>1D0E4CCF-8C22-4574-AE9F-0D70920479D6</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>10</integer>
+			<key>xpos</key>
+			<real>180</real>
+			<key>ypos</key>
+			<real>50</real>
+		</dict>
+		<key>6C641557-7A00-47F8-9714-16FB10839D7D</key>
+		<dict>
+			<key>xpos</key>
+			<real>240</real>
+			<key>ypos</key>
+			<real>20</real>
+		</dict>
+		<key>BA2D7373-D4FC-4DD3-B86A-D96EF56F312C</key>
+		<dict>
+			<key>xpos</key>
+			<real>385</real>
+			<key>ypos</key>
+			<real>20</real>
+		</dict>
+		<key>EA241CBE-B9E4-4050-BAE7-9EDCEB5A5D56</key>
+		<dict>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>20</real>
+		</dict>
+	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>filtermode</key>
+				<integer>1</integer>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+			</dict>
+			<key>description</key>
+			<string>Folder for saving shrinked image(s). If empty the source path will be used.</string>
+			<key>label</key>
+			<string>Target Folder</string>
+			<key>type</key>
+			<string>filepicker</string>
+			<key>variable</key>
+			<string>target_folder</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Creates a copy of the image file with SUFFIX.</string>
+			<key>label</key>
+			<string>Image Suffix</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>img_suffix</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>open</string>
+				<key>pairs</key>
+				<array>
+					<array>
+						<string>Open</string>
+						<string>open</string>
+					</array>
+					<array>
+						<string>Reveal</string>
+						<string>reveal</string>
+					</array>
+					<array>
+						<string>Open and Reveal</string>
+						<string>open_reveal</string>
+					</array>
+					<array>
+						<string>Ask</string>
+						<string>ask</string>
+					</array>
+					<array>
+						<string>Do nothing</string>
+						<string>no</string>
+					</array>
+				</array>
+			</dict>
+			<key>description</key>
+			<string>Open or reveal converted image(s) when shrinking is complete</string>
+			<key>label</key>
+			<string>Open or Reveal Image(s)</string>
+			<key>type</key>
+			<string>popupbutton</string>
+			<key>variable</key>
+			<string>open_file</string>
+		</dict>
+	</array>
+	<key>version</key>
+	<string>0.8</string>
+	<key>webaddress</key>
+	<string>https://github.com/shensquared/alfred-ImageMagick-actions</string>
+</dict>
+</plist>
