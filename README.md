@@ -8,8 +8,8 @@ An Alfred workflow for quick image manipulation using ImageMagick. This workflow
 
 ## Requirements
 
-- **Alfred 4+** with Powerpack
-- **ImageMagick** (must be installed and accessible via command line)
+- **[Alfred 4+](https://www.alfredapp.com/)** with Powerpack
+- **[ImageMagick](https://imagemagick.org/)** (must be installed and accessible via command line)
 
 ### Installing ImageMagick
 
