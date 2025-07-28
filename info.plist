@@ -19,11 +19,50 @@
 				<false/>
 			</dict>
 		</array>
+		<key>6C0B733C-643D-42F4-AD97-5D7553DE61C4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>ADDD91EA-1196-4CFB-9C3D-189FD399C6B9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>6C641557-7A00-47F8-9714-16FB10839D7D</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>BA2D7373-D4FC-4DD3-B86A-D96EF56F312C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>93C0CA81-E59D-44E7-9B8A-D9BFA74706A0</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>B2C4D318-6C0B-46C2-B6C6-CD86566975F4</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>B2C4D318-6C0B-46C2-B6C6-CD86566975F4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6C0B733C-643D-42F4-AD97-5D7553DE61C4</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -69,21 +108,6 @@
 	<string>ImageMagick</string>
 	<key>objects</key>
 	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>imageresizemode</key>
-				<integer>0</integer>
-				<key>stackview</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.userinterface.image</string>
-			<key>uid</key>
-			<string>080C078C-5747-4304-9A30-CB4921F076A3</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -165,6 +189,21 @@ bash tight-square.sh "$1" "$filepath"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>imageresizemode</key>
+				<integer>0</integer>
+				<key>stackview</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.userinterface.image</string>
+			<key>uid</key>
+			<string>080C078C-5747-4304-9A30-CB4921F076A3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argument</key>
 				<string></string>
 				<key>passthroughargument</key>
@@ -179,6 +218,90 @@ bash tight-square.sh "$1" "$filepath"</string>
 			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
 			<string>1D0E4CCF-8C22-4574-AE9F-0D70920479D6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>#!/bin/bash
+
+bash remove-white-bg.sh "$filepath"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>6C0B733C-643D-42F4-AD97-5D7553DE61C4</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsmulti</key>
+				<integer>1</integer>
+				<key>filetypes</key>
+				<array>
+					<string>com.compuserve.gif</string>
+					<string>public.heic</string>
+					<string>public.jpeg</string>
+					<string>public.png</string>
+					<string>public.svg-image</string>
+					<string>public.tiff</string>
+				</array>
+				<key>name</key>
+				<string>Remove Background</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.action</string>
+			<key>uid</key>
+			<string>93C0CA81-E59D-44E7-9B8A-D9BFA74706A0</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>imageresizemode</key>
+				<integer>0</integer>
+				<key>stackview</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.userinterface.image</string>
+			<key>uid</key>
+			<string>ADDD91EA-1196-4CFB-9C3D-189FD399C6B9</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>filepath</key>
+					<string>{query}</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>B2C4D318-6C0B-46C2-B6C6-CD86566975F4</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -203,12 +326,42 @@ bash tight-square.sh "$1" "$filepath"</string>
 			<key>ypos</key>
 			<real>50</real>
 		</dict>
+		<key>6C0B733C-643D-42F4-AD97-5D7553DE61C4</key>
+		<dict>
+			<key>xpos</key>
+			<real>235</real>
+			<key>ypos</key>
+			<real>155</real>
+		</dict>
 		<key>6C641557-7A00-47F8-9714-16FB10839D7D</key>
 		<dict>
 			<key>xpos</key>
 			<real>225</real>
 			<key>ypos</key>
 			<real>20</real>
+		</dict>
+		<key>93C0CA81-E59D-44E7-9B8A-D9BFA74706A0</key>
+		<dict>
+			<key>xpos</key>
+			<real>30</real>
+			<key>ypos</key>
+			<real>155</real>
+		</dict>
+		<key>ADDD91EA-1196-4CFB-9C3D-189FD399C6B9</key>
+		<dict>
+			<key>xpos</key>
+			<real>380</real>
+			<key>ypos</key>
+			<real>155</real>
+		</dict>
+		<key>B2C4D318-6C0B-46C2-B6C6-CD86566975F4</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>10</integer>
+			<key>xpos</key>
+			<real>170</real>
+			<key>ypos</key>
+			<real>185</real>
 		</dict>
 		<key>BA2D7373-D4FC-4DD3-B86A-D96EF56F312C</key>
 		<dict>
@@ -309,7 +462,7 @@ bash tight-square.sh "$1" "$filepath"</string>
 		</dict>
 	</array>
 	<key>version</key>
-	<string>0.8</string>
+	<string>0.9</string>
 	<key>webaddress</key>
 	<string>https://github.com/shensquared/alfred-ImageMagick-actions</string>
 </dict>
