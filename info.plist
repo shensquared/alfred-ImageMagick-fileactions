@@ -4,8 +4,6 @@
 <dict>
 	<key>bundleid</key>
 	<string>shensquared.alfred.ImageMagick</string>
-	<key>category</key>
-	<string>Tools</string>
 	<key>connections</key>
 	<dict>
 		<key>1D0E4CCF-8C22-4574-AE9F-0D70920479D6</key>
@@ -103,7 +101,7 @@ bash tight-square.sh "$1" "$filepath"</string>
 				<key>subtext</key>
 				<string></string>
 				<key>title</key>
-				<string>Make Tight</string>
+				<string>TightLayout</string>
 				<key>withspace</key>
 				<false/>
 			</dict>
@@ -129,7 +127,7 @@ bash tight-square.sh "$1" "$filepath"</string>
 					<string>public.tiff</string>
 				</array>
 				<key>name</key>
-				<string>Make Tight</string>
+				<string>Make TightLayout</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.trigger.action</string>
@@ -168,21 +166,21 @@ bash tight-square.sh "$1" "$filepath"</string>
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<real>180</real>
+			<real>170</real>
 			<key>ypos</key>
 			<real>50</real>
 		</dict>
 		<key>6C641557-7A00-47F8-9714-16FB10839D7D</key>
 		<dict>
 			<key>xpos</key>
-			<real>240</real>
+			<real>230</real>
 			<key>ypos</key>
 			<real>20</real>
 		</dict>
 		<key>BA2D7373-D4FC-4DD3-B86A-D96EF56F312C</key>
 		<dict>
 			<key>xpos</key>
-			<real>385</real>
+			<real>380</real>
 			<key>ypos</key>
 			<real>20</real>
 		</dict>
