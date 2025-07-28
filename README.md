@@ -6,6 +6,10 @@
 
 An Alfred workflow for quick image manipulation using ImageMagick. Crop whitespace, create square images, and remove white backgrounds from your image files.
 
+<div align="center">
+  <img src="demo.gif" alt="Alfred ImageMagick Workflow Demo" width="600">
+</div>
+
 ## Requirements
 
 - **[Alfred 4+](https://www.alfredapp.com/)** with Powerpack (required for List Filter functionality)
@@ -25,10 +29,23 @@ An Alfred workflow for quick image manipulation using ImageMagick. Crop whitespa
 - **Crop Whitespace**: Removes surrounding whitespace (5% fuzz factor)
 - **Crop Whitespace + Square**: Crops whitespace then pads to perfect square
 
+**Demo:**
+```
+Original: [Image with lots of whitespace around content]
+Crop:     [Content tightly cropped, no whitespace]
+Square:   [Content centered in perfect square]
+```
+
 ### 🎨 Remove Background
 - Removes white backgrounds and converts to transparent PNG
 - Uses 10% fuzz factor for intelligent detection
 - Trims to tight bounds around the subject
+
+**Demo:**
+```
+Original: [Image with white background]
+Result:   [Image with transparent background, tight bounds]
+```
 
 **All operations automatically copy results to clipboard.**
 
