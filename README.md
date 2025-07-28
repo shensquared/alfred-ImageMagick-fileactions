@@ -87,10 +87,6 @@ chmod +x tight-square.sh remove-white-bg.sh
 
 MIT License - see [LICENSE](LICENSE) file.
 
-## Version
-
-Current version: 0.9
-
 ---
 
 
