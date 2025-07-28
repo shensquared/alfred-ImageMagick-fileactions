@@ -28,7 +28,7 @@ copy_to_clipboard() {
                 return 1
             }
         }
-        echo "Image copied to clipboard: $image_path"
+        echo "Image copied to clipboard: $image_path" >&2
         return 0
     else
         echo "Error: Image file not found: $image_path" >&2
@@ -136,8 +136,8 @@ fi
 
 # Copy the resulting image to clipboard
 if [[ -n "$result_path" ]]; then
-    copy_to_clipboard "$result_path"
-    echo "$result_path"
+    copy_to_clipboard "$result_path" >&2  # Send clipboard message to stderr
+    printf "%s" "$result_path"  # Output file path without newline
 else
     echo "Error: No result path generated" >&2
     exit 1

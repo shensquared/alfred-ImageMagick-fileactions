@@ -33,7 +33,18 @@
 			</dict>
 		</array>
 		<key>BA2D7373-D4FC-4DD3-B86A-D96EF56F312C</key>
-		<array/>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>080C078C-5747-4304-9A30-CB4921F076A3</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>EA241CBE-B9E4-4050-BAE7-9EDCEB5A5D56</key>
 		<array>
 			<dict>
@@ -58,6 +69,21 @@
 	<string>ImageMagick</string>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>imageresizemode</key>
+				<integer>0</integer>
+				<key>stackview</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.userinterface.image</string>
+			<key>uid</key>
+			<string>080C078C-5747-4304-9A30-CB4921F076A3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -161,6 +187,13 @@ bash tight-square.sh "$1" "$filepath"</string>
 	<string></string>
 	<key>uidata</key>
 	<dict>
+		<key>080C078C-5747-4304-9A30-CB4921F076A3</key>
+		<dict>
+			<key>xpos</key>
+			<real>520</real>
+			<key>ypos</key>
+			<real>20</real>
+		</dict>
 		<key>1D0E4CCF-8C22-4574-AE9F-0D70920479D6</key>
 		<dict>
 			<key>colorindex</key>
